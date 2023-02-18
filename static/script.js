@@ -1,5 +1,3 @@
-// TODO: неработает ввод отрицательных чисел!!!
-
 var a = document.getElementById('inp1');
 var b = document.getElementById('inp2');
 var action = document.getElementById('action');
