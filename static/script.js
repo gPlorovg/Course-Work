@@ -59,8 +59,9 @@ function inp_dig(inp){
 
 function inp_num(inp, dig){
     // console.log('[^('+alphabet.slice(0,dig.value)+')]');
-    var re = new RegExp('[^('+alphabet.slice(0,dig.value)+')]','gi');
-    if(inp.value.length == 0 || inp.value.match(re)){
+    var re = new RegExp('(?!^-)(?!['+alphabet.slice(0,dig.value)+'])','gi');
+
+    if(inp.value.length == 0 || (inp.value.match(re).length - 1)){
         inp_err(inp);
         return 0;
     } 
@@ -79,9 +80,6 @@ document.getElementById('culcbut').onclick = function() {
     b.value = document.getElementById('inp2').value;
     action.value = document.getElementById('action').value;
     dig.value = document.getElementById('digit').value;
-    // inp_err(dig);
-
-    
 
     if(inp_dig(dig) + inp_num(a,dig) + inp_num(b,dig) == 3)
         send_to_server(a,b,action,dig);
