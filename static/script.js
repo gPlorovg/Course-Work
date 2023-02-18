@@ -1,3 +1,5 @@
+// TODO: неработает ввод отрицательных чисел!!!
+
 var a = document.getElementById('inp1');
 var b = document.getElementById('inp2');
 var action = document.getElementById('action');
@@ -14,19 +16,26 @@ var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 function send_to_server(a,b,action,dig){
     let req = {
-        num1: a,
-        num2: b,
-        action: action,
-        dig: dig
+        num1: a.value,
+        num2: b.value,
+        action: action.value,
+        dig: dig.value
     };
-    let resp = fetch('http://127.0.0.1:5000/calculate', {
+    fetch('http://127.0.0.1:5000/calculate', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
+        headers: new Headers({
+            'content-type': 'application/json;charset=utf-8'
+        }),
         body: JSON.stringify(req)
+    }).then(function (resp){
+        if (resp.status != 200) {
+            console.log("Response Error Status: " + resp.status);
+            return ;
+        }
+        resp.json().then(function (data) {
+            show_rez(a,b,dig,action,data.rez);
+        })
     });
-    return resp.json();
 }
 
 function inp_err(inp){
@@ -49,7 +58,7 @@ function inp_dig(inp){
 }
 
 function inp_num(inp, dig){
-    console.log('[^('+alphabet.slice(0,dig.value)+')]');
+    // console.log('[^('+alphabet.slice(0,dig.value)+')]');
     var re = new RegExp('[^('+alphabet.slice(0,dig.value)+')]','gi');
     if(inp.value.length == 0 || inp.value.match(re)){
         inp_err(inp);
@@ -62,7 +71,7 @@ function inp_num(inp, dig){
 }
 
 function show_rez(a,b,dig,action,rez){
-    answer.innerHTML = a.value+'<span>'+dig.value+'</span>'+' '+action.value+' '+b.value+'<span>'+dig.value+'</span>'+' = '+ rez;
+    answer.innerHTML = a.value+'<span>'+dig.value+'</span>'+' '+action.value+' '+b.value+'<span>'+dig.value+'</span>'+' = '+ rez+'<span>'+dig.value+'</span>';
     document.body.append(answer);
 }
 document.getElementById('culcbut').onclick = function() {
@@ -70,11 +79,10 @@ document.getElementById('culcbut').onclick = function() {
     b.value = document.getElementById('inp2').value;
     action.value = document.getElementById('action').value;
     dig.value = document.getElementById('digit').value;
-    // console.log(a.value);
     // inp_err(dig);
 
-    var resp = send_to_server(a,b,action,dig);
+    
 
     if(inp_dig(dig) + inp_num(a,dig) + inp_num(b,dig) == 3)
-        show_rez(a,b,dig,action,resp);
+        send_to_server(a,b,action,dig);
 };
