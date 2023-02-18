@@ -11,6 +11,24 @@ answer.className = "answer";
 
 var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
+
+function send_to_server(a,b,action,dig){
+    let req = {
+        num1: a,
+        num2: b,
+        action: action,
+        dig: dig
+    };
+    let resp = fetch('http://127.0.0.1:5000/calculate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(req)
+    });
+    return resp.json();
+}
+
 function inp_err(inp){
     inp.style.border = "2px solid #E5BE01";
 };
@@ -43,8 +61,8 @@ function inp_num(inp, dig){
     };
 }
 
-function culcf(a,b,dig,action){
-    answer.innerHTML = a.value+'<span>'+dig.value+'</span>'+' '+action.value+' '+b.value+'<span>'+dig.value+'</span>'+' = '+ (Number(a.value) + Number(b.value));
+function show_rez(a,b,dig,action,rez){
+    answer.innerHTML = a.value+'<span>'+dig.value+'</span>'+' '+action.value+' '+b.value+'<span>'+dig.value+'</span>'+' = '+ rez;
     document.body.append(answer);
 }
 document.getElementById('culcbut').onclick = function() {
@@ -55,6 +73,8 @@ document.getElementById('culcbut').onclick = function() {
     // console.log(a.value);
     // inp_err(dig);
 
+    var resp = send_to_server(a,b,action,dig);
+
     if(inp_dig(dig) + inp_num(a,dig) + inp_num(b,dig) == 3)
-        culcf(a,b,dig,action);
+        show_rez(a,b,dig,action,resp);
 };
