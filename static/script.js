@@ -3,9 +3,6 @@ var b = document.getElementById('inp2');
 var action = document.getElementById('action');
 var dig = document.getElementById('digit');
 
-// var answer = document.createDocumentFragment('div');
-// answer.className = "answer";
-// answer.innerHTML = "answertext";
 var answer = document.createElement('div');
 answer.className = "answer";
 
