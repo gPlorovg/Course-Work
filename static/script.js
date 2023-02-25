@@ -16,7 +16,7 @@ function send_to_server(a,b,action,dig){
         action: action.value,
         dig: dig.value
     };
-    fetch('http://127.0.0.1:5000/calculate', {
+    fetch(window.location+'/calculate', {
         method: 'POST',
         headers: new Headers({
             'content-type': 'application/json;charset=utf-8'

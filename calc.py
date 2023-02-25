@@ -140,7 +140,7 @@ def calculate(data):
     b = data['num2'].replace('.', ',')
     if data['action'] == 'прибавить к':
         d = '+'
-    elif data['action'] == 'отнять от':
+    elif data['action'] == 'отнять':
         d = '-'
     else:
         d = ' '
