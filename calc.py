@@ -136,8 +136,8 @@ def calculate(data):
             return res
 
     c = int(data['dig'])
-    a = data['num1'].replace('.', ',')
-    b = data['num2'].replace('.', ',')
+    a = data['num1'].replace('.', ',').upper()
+    b = data['num2'].replace('.', ',').upper()
     if data['action'] == 'прибавить к':
         d = '+'
     elif data['action'] == 'отнять':
