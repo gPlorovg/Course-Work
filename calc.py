@@ -138,12 +138,7 @@ def calculate(data):
     c = int(data['dig'])
     a = data['num1'].replace('.', ',').upper()
     b = data['num2'].replace('.', ',').upper()
-    if data['action'] == 'прибавить к':
-        d = '+'
-    elif data['action'] == 'отнять':
-        d = '-'
-    else:
-        d = ' '
+    d = data['action']
     a, b, s = sign(a, b)
     a, b = fill(a, b)
     if d == "+":
