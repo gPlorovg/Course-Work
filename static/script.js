@@ -1,14 +1,15 @@
+// Создание элементов страницы
 var a = document.getElementById('inp1');
 var b = document.getElementById('inp2');
 var action = document.getElementById('action');
 var dig = document.getElementById('digit');
-
+// Создание элемента ответа
 var answer = document.createElement('div');
 answer.className = "answer";
-
+// Допустимый ввод
 var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-
+// Отправка запроса для вычисления на сервер
 function send_to_server(a,b,action,dig){
     let req = {
         num1: a.value,
@@ -32,15 +33,15 @@ function send_to_server(a,b,action,dig){
         })
     });
 }
-
+// Обработка некорректного ввода
 function inp_err(inp){
     inp.style.border = "2px solid #E5BE01";
 };
-
+// Обработка корректного ввода
 function inp_right(inp){
     inp.style.border = "1px solid #DBDBDB";
 };
-
+// Обработка ввода степени
 function inp_dig(inp){
     if(Number(inp.value) < 2 || Number(inp.value) > 36 || isNaN(Number(inp.value))){
         inp_err(inp);
@@ -51,7 +52,7 @@ function inp_dig(inp){
         return 1;
     }
 }
-
+// Обработка ввода числа
 function inp_num(inp, dig){
     // console.log('[^('+alphabet.slice(0,dig.value)+')]');
     var re = new RegExp('(?!^-)(?!['+alphabet.slice(0,dig.value)+'])','gi');
@@ -65,7 +66,7 @@ function inp_num(inp, dig){
         return 1;
     };
 }
-
+// Вывод ответа
 function show_rez(a,b,dig,action,rez){
     answer.innerHTML = a.value+'<span>'+dig.value+'</span>'+' '+action.value+' '+b.value+'<span>'+dig.value+'</span>'+' = '+ rez+'<span>'+dig.value+'</span>';
     document.body.append(answer);

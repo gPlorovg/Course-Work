@@ -1,3 +1,7 @@
+/*Импорт шрифтов fonts Roboto Mono*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+/*Сброс стандартных стилей*/
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -336,26 +340,7 @@ textarea {
   color: #000;
   padding: 0.2em 0;
 }
-/* roboto-mono-regular - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: 'Roboto Mono';
-    font-style: normal;
-    font-weight: 400;
-    src: url('/fonts/roboto-mono-v22-latin-regular.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+ */
-         url('/fonts/roboto-mono-v22-latin-regular.woff') format('woff'); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-  }
-  /* roboto-mono-700 - latin */
-  @font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: 'Roboto Mono';
-    font-style: normal;
-    font-weight: 700;
-    src: url('/fonts/roboto-mono-v22-latin-700.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+ */
-         url('/fonts/roboto-mono-v22-latin-700.woff') format('woff'); /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-  }
-
-
+/*Наложение адаптивных стилей на страницу*/
 body{
     font-family: 'Roboto Mono';
     font-style: normal;

@@ -1,3 +1,7 @@
+"""
+Calculate modul
+"""
+
 def calculate(data):
     def sign(a, b):
         if a[0] != "-" and b[0] != "-":
