@@ -1,5 +1,5 @@
 """
-Calculate modul
+Calculate module
 """
 
 def calculate(data):
@@ -17,13 +17,13 @@ def calculate(data):
             b = b[1:]
             return a, b, 4
 
-    def whoisbigger(n1, n2):
+    def whoisbigger(a, b):
         i = 0
-        while i < len(n1) - 1 and n1[i] == n2[i] or n1[i] == "," or n2[i] == ",":
+        while i < len(a) - 1 and a[i] == b[i] or a[i] == "," or b[i] == ",":
             i += 1
-        if symtonum(n1[i]) > symtonum(n2[i]):
+        if symtonum(a[i]) > symtonum(b[i]):
             return 1
-        elif symtonum(n1[i]) < symtonum(n2[i]):
+        elif symtonum(a[i]) < symtonum(b[i]):
             return 2
         else:
             return 3
@@ -91,53 +91,48 @@ def calculate(data):
                 if n >= c:
                     f = 1 
                     n -= c
-                    res += str(numtosym(n))
                 else:
                     f = 0
-                    res += str(numtosym(n))   
+                res += str(numtosym(n)) 
             else:
                 res += ','
         res = res[::-1]
         return res
     
-    def subtraction(n1,n2,c):
-        if whoisbigger(n1, n2) == 3:
+    def subtraction(a,b):
+        if whoisbigger(a, b) == 3:
             return '0'
-        elif whoisbigger(n1, n2) == 1:
+        elif whoisbigger(a, b) == 1:
             f = 0
             res = ''
-            for i in range(len(n1)-1, -1, -1):
-                if n1[i] != ',' and n2[i] != ',':
-                    t = symtonum(n1[i]) - symtonum(n2[i]) - f
+            for i in range(len(a)-1, -1, -1):
+                if a[i] != ',' and b[i] != ',':
+                    t = symtonum(a[i]) - symtonum(b[i]) - f
                     if t < 0:
                         f = 1
                         t += c
-                        res += str(numtosym(t))
                     else:
                         f = 0
-                        res += str(numtosym(t))
+                    res += str(numtosym(t))
                 else:
                     res += ','
-            res = res[::-1]
-            return res
-        elif whoisbigger(n1,n2) == 2:
+        else:
             f = 0
             res = ''
-            for i in range(len(n1) - 1, -1, -1):
-                if n1[i] != ',' and n2[i] != ',':
-                    t = symtonum(n2[i]) - symtonum(n1[i]) - f
+            for i in range(len(a) - 1, -1, -1):
+                if a[i] != ',' and b[i] != ',':
+                    t = symtonum(b[i]) - symtonum(a[i]) - f
                     if t < 0:
                         f = 1
                         t += c
-                        res += str(numtosym(t))
                     else:
                         f = 0
-                        res += str(numtosym(t))
+                    res += str(numtosym(t))
                 else:
                     res += ','
-            res = res[::-1]
             res= "-" + res
-            return res
+        res = res[::-1]
+        return res
 
     c = int(data['dig'])
     a = data['num1'].replace('.', ',').upper()
@@ -149,29 +144,21 @@ def calculate(data):
         if s == 1:
             res = addition(a,b)
         elif s == 2:
-            res = subtraction(b,a,c)
+            res = subtraction(b,a)
         elif s == 3:
-            res = subtraction(a,b,c)
+            res = subtraction(a,b)
         else:
             res = addition(a,b)
             res = "-" + res 
     elif d == "-":
         if s == 1:
-            res = subtraction(a,b,c)
+            res = subtraction(a,b)
         elif s == 2:
             res = addition(a,b)
             res = "-" + res 
         elif s == 3:
             res = addition(a,b)
         else:
-            res = subtraction(b,a,c)
+            res = subtraction(b,a)
     res = beautynum(res)
     return res
-#Тест
-# req = {
-#     'num1': '1',
-#     'num2': '0',
-#     'action': 'прибавить к',
-#     'dig': '2'
-# }
-# print(calculate(req))
