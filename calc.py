@@ -150,7 +150,7 @@ def calculate(data):
         else:
             res = addition(a,b)
             res = "-" + res 
-    elif d == "-":
+    else:
         if s == 1:
             res = subtraction(a,b)
         elif s == 2:
