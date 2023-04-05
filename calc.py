@@ -23,7 +23,7 @@ def calculate(data):
             return 2
         else:
             return 3
-    
+
     def beautynum(rez):
         while rez[0] == '0' and len(rez) != 1:
             rez = rez[1:]
@@ -38,7 +38,29 @@ def calculate(data):
         if rez[-1] == ',':
             rez = rez[:-1]
         return rez
-        
+    def multiplication(a, b):
+        itog = ''
+        a, b = a[::-1], b[::-1]
+        if whoisbigger(a, b) == 2:
+            a, b = b, a
+        for i in range(len(a)):
+            rez = ''
+            per = 0
+            p1 = symtonum(a[i])
+            for k in range(len(b)):
+                p2 = symtonum(b[k]) * p1
+                if (p2 // c) == 0:
+                    rez += (numtosym(p2 % c + per))
+                    per = 0
+                elif (p2 // c) != 0:
+                    rez += (numtosym(p2 % c + per))
+                    per = (p2 // c)
+            rez = '0' * i + rez
+            rez = rez[::-1]
+            rez, itog = fill(rez, itog)
+            itog = addition(rez, itog)
+        return itog
+
     def symtonum(g):
         numbers = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         return numbers.find(g)
@@ -77,7 +99,7 @@ def calculate(data):
         else:
             a = a + '0' * (r2 - r1)
         return a, b
-  
+
     def addition(a,b):
         f = 0
         res = ''
@@ -85,17 +107,17 @@ def calculate(data):
             if a[i] != ',' and b[i] != ',':
                 n = symtonum(a[i]) + symtonum(b[i]) + f
                 if n >= c:
-                    f = 1 
+                    f = 1
                     n -= c
                     res += str(numtosym(n))
                 else:
                     f = 0
-                    res += str(numtosym(n))   
+                    res += str(numtosym(n))
             else:
                 res += ','
         res = res[::-1]
         return res
-    
+
     def subtraction(n1,n2,c):
         if whoisbigger(n1, n2) == 3:
             return '0'
@@ -116,7 +138,7 @@ def calculate(data):
                     res += ','
             res = res[::-1]
             return res
-        elif whoisbigger(n1,n2) == 2:
+        elif whoisbigger(n1, n2) == 2:
             f = 0
             res = ''
             for i in range(len(n1) - 1, -1, -1):
@@ -132,7 +154,7 @@ def calculate(data):
                 else:
                     res += ','
             res = res[::-1]
-            res= "-" + res
+            res = "-" + res
             return res
 
     c = int(data['dig'])
@@ -143,24 +165,26 @@ def calculate(data):
     a, b = fill(a, b)
     if d == "+":
         if s == 1:
-            res = addition(a,b)
+            res = addition(a, b)
         elif s == 2:
-            res = subtraction(b,a,c)
+            res = subtraction(b, a, c)
         elif s == 3:
-            res = subtraction(a,b,c)
+            res = subtraction(a, b, c)
         else:
-            res = addition(a,b)
-            res = "-" + res 
+            res = addition(a, b)
+            res = "-" + res
     elif d == "-":
         if s == 1:
-            res = subtraction(a,b,c)
+            res = subtraction(a, b, c)
         elif s == 2:
-            res = addition(a,b)
-            res = "-" + res 
+            res = addition(a, b)
+            res = "-" + res
         elif s == 3:
-            res = addition(a,b)
+            res = addition(a, b)
         else:
-            res = subtraction(b,a,c)
+            res = subtraction(b, a, c)
+    elif d == '*':
+        res = multiplication(a, b) # пока работает только либо только с числами до 20 сис, либо с одной цифрой в столбе.
     res = beautynum(res)
     return res
 #Тест
