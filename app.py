@@ -1,5 +1,5 @@
 """
-Flask server for calculator
+Flask server for culculator
 """
 from flask import Flask, render_template, request, make_response, jsonify
 
