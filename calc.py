@@ -1,7 +1,7 @@
 """
 Calculate module
-"""
 
+"""
 data = {'dig':'10', 'num1':'1.1234', 'num2':'0.5678', 'action':'*'}
 
 def calculate(data):
@@ -218,7 +218,7 @@ def calculate(data):
     a, b = fill(a, b)
     pos = commapos(a, b)
 
-    
+
     if d == '+':
         if s == 1:
             res = addition(a, b)
@@ -229,7 +229,7 @@ def calculate(data):
         else:
             res = addition(a, b)
             res = '-' + res
-            
+
     elif d == '-':
         if s == 1:
             res = subtraction(a, b)
@@ -240,7 +240,7 @@ def calculate(data):
             res = addition(a, b)
         else:
             res = subtraction(b, a)
-            
+
     elif d == "*":
 
         if s == 1 or s == 4:
@@ -252,4 +252,6 @@ def calculate(data):
     res = beautynum(res)
     #res_10 = translate(res)
     return res#, res_10
+
+
 print(calculate(data))
