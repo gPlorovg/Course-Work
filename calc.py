@@ -2,7 +2,7 @@
 Calculate module
 
 """
-data = {'dig':'10', 'num1':'1.1234', 'num2':'0.5678', 'action':'*'}
+data = {'dig':'10', 'num1':'0,1929', 'num2':'0.09871', 'action': '*'}
 
 def calculate(data):
 
@@ -20,7 +20,6 @@ def calculate(data):
             b = b[1:]
             return a, b, 4
 
-
     def whoisbigger(a, b):
         i = 0
         while i < len(a) - 1 and a[i] == b[i] or a[i] == ',' or b[i] == ',':
@@ -33,13 +32,13 @@ def calculate(data):
             return 3
 
 
-    def multiplication(a, b):
+    def multiplication(a, b): # короче че я думаю: надо разделить умножение до запятой и после. данный код работает, если будут все числа до запятой.
         itog = ""
         if whoisbigger(a, b) == 2:
             a, b = b, a
         a, b = a[::-1], b[::-1]
         z = 0
-        print(a, b)
+        #print(a, b)
         k = max(len(a), len(b))
         for i in range(len(b)):
             res = ""
@@ -52,45 +51,33 @@ def calculate(data):
                         t = sa * sb + f
                         f = t // c
                         res = numtosym(t % c) + res
-                if a.find(',') != -1 or b.find(',') != -1:
+                if a.find(',') != -1 and b.find(',') != -1:
                     res = '0' * k + res
                     k -= 1
-                    #print(res)
-                    #print(len(res) - pos)
-                    res = res[:(len(res) - pos)] + ',' + res[(len(res) - pos):]
-                    #print(res)
                 res += '0' * z
                 z += 1
-                #print(res)
-                res, itog = fill(res, itog)
-                print(itog)
-                #print(res, itog)
+                res = res[:(len(res) - pos)] + ',' + res[(len(res) - pos):]
+                res, itog = fill(res, itog, '*')
                 itog = addition(res, itog)
-        #print(itog)
-        return (itog)
+        return itog
 
     def translate(string):
         return int((string))
 
-
-    def beautynum(res):
-        while res[0] == '0' and len(res) != 1:
-            res = res[1:]
-        if res[0] == '-':
-            while res[1] == '0' and len(res) != 2:
-                res = '-' + res[2:]
-        if res[:2] == "-0" and len(res) == 2:
-            res = '0'
-        while res[-1] == '0' and len(res)!=1:
-                res = res[:-1]
-        if res[-1] == ',':
-            res = res[:-1]
-        while res[-1] == '0' and len(res)!=1:
-                res = res[:-1]
-        if res == "":
-            res = '0'
-        return res
-
+    def beautynum(rez):
+        while rez[0] == '0' and (rez[1] == '0' or rez[1] != ','):
+            rez = rez[1:]
+        if rez[0] == "-":
+            while rez[1] == '0' and len(rez) != 2:
+                rez = '-' + rez[2:]
+        if rez[:2] == '-0' and len(rez) == 2:
+            rez = '0'
+        if rez.find(',') != -1 and rez[-1] == '0':
+            while rez[-1] == '0':
+                rez = rez[:-1]
+        if rez[-1] == ',':
+            rez = rez[:-1]
+        return rez
 
     def symtonum(g):
         numbers = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -102,13 +89,13 @@ def calculate(data):
         return numbers[u]
 
 
-    def fill(a, b):
-        if a.find(',') != -1 and b.find(',') != -1:
+    def fill(a, b, c):
+        if a.find(',') != -1 and b.find(',') != -1 and c != '*':
             sa = len(a[: a.find(',')])
             ea = len(a[a.find(',') + 1:])
             sb = len(b[: b.find(',')])
             eb = len(b[b.find(',') + 1:])
-        if a.find(',') == -1 and b.find(',') != -1:
+        elif a.find(',') == -1 and b.find(',') != -1: #если elif, то работает сложение, а если if, то умножение
             sa, sb = len(a), len(b[: b.find(',')])
             ea, eb = -1, len(b[b.find(',') + 1:])
         elif a.find(',') != -1 and b.find(',') == -1:
@@ -129,17 +116,15 @@ def calculate(data):
         if ea > eb:
             b = b + '0' * (ea - eb)
         else:
-            a = a + '0' * (eb - ea)
+            a = a + '0' * abs(eb - ea)
         if a.find(',') == -1 and b.find(',') != -1:
             a = zerotocomma(a, b.find(','))
-        if a.find(',') != -1 and b.find(',') == -1:
+        elif a.find(',') != -1 and b.find(',') == -1:
             b = zerotocomma(b, a.find(','))
         return a, b
 
     def zerotocomma(string, num):
-        return string[:num] + ',' + string[num + 1:]
-
-
+        return string[:num] + ',' + string[num+1:]
     def addition(a, b):
         f = 0
         res = ""
@@ -215,7 +200,8 @@ def calculate(data):
 
 
     a, b, s = sign(a, b)
-    a, b = fill(a, b)
+    a, b = fill(a, b, d)
+    print(a, b)
     pos = commapos(a, b)
 
 
