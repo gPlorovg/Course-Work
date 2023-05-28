@@ -180,10 +180,10 @@ def calculate(data):
         b = 1 / float(rebase(b, c, 10))
         return rebase(a * b, 10, c)
 
-    c = int(data['СС'])
-    a = data['a'].replace(',', '.').upper()
-    b = data['b'].replace(',', '.').upper()
-    d = data['Д']
+    c = int(data['dig'])
+    a = data['num1'].replace(',', '.').upper()
+    b = data['num2'].replace(',', '.').upper()
+    d = data['action']
 
     a, b, s = sign(a, b)
     a, b = fill(a, b)
