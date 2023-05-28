@@ -1,14 +1,18 @@
+"""
+Calculate modul
+"""
+
 from numsys import rebase
 
 
 def calculate(data):
     def sign(a, b):
-        if a[0] != '-' and b[0] != '-':
+        if a[0] != "-" and b[0] != "-":
             return a, b, 1
-        elif a[0] == '-' and b[0] != '-':
+        elif a[0] == "-" and b[0] != "-":
             a = a[1:]
             return a, b, 2
-        elif a[0] != '-' and b[0] == '-':
+        elif a[0] != "-" and b[0] == "-":
             b = b[1:]
             return a, b, 3
         else:
@@ -19,10 +23,11 @@ def calculate(data):
     def whoisbigger(a, b):
         i = 0
         while i < len(a) - 1 and a[i] == b[i] or a[i] == '.' or b[i] == '.':
+
             i += 1
-        if symtonum(a[i]) > symtonum(b[i]):
+        if symtonum(n1[i]) > symtonum(n2[i]):
             return 1
-        elif symtonum(a[i]) < symtonum(b[i]):
+        elif symtonum(n1[i]) < symtonum(n2[i]):
             return 2
         else:
             return 3
@@ -42,6 +47,7 @@ def calculate(data):
             res = res[:-1]
         return res
 
+
     def symtonum(g):
         numbers = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
         return numbers.find(g)
@@ -51,6 +57,7 @@ def calculate(data):
         return numbers[u]
 
     def fill(a, b):
+
         if a.find('.') != -1 and b.find('.') != -1:
             sa = len(a[: a.find('.')])
             ea = len(a[a.find('.') + 1:])
@@ -72,17 +79,21 @@ def calculate(data):
             sb = len(b)
             eb = 0
         if sa == sb:
+
             a = '0' + a
             b = '0' + b
-        elif sa > sb:
-            b = '0' * (sa - sb + 1) + b
+        elif p1 > p2:
+            b = '0' * (p1 - p2 + 1) + b
             a = '0' + a
+
         else:
             a = '0' * (sb - sa + 1) + a
+
             b = '0' + b
-        if ea > eb:
-            b = b + '0' * (ea - eb)
+        if r1 > r2:
+            b = b + '0' * (r1 - r2)
         else:
+
             a = a + '0' * (eb - ea)
         if a.find('.') == -1 and b.find('.') != -1:
             a = zerotodot(a, b.find('.'))
@@ -133,6 +144,7 @@ def calculate(data):
                         t = symtonum(a[i]) - symtonum(b[i]) - f
                     else:
                         t = symtonum(b[i]) - symtonum(a[i]) - f
+
                     if t < 0:
                         f = 1
                         t += c
@@ -180,6 +192,7 @@ def calculate(data):
         b = 1 / float(rebase(b, c, 10))
         return rebase(a * b, 10, c)
 
+
     c = int(data['dig'])
     a = data['num1'].replace(',', '.').upper()
     b = data['num2'].replace(',', '.').upper()
@@ -223,3 +236,4 @@ def calculate(data):
                 case 2 | 3:
                     res = '-' + division(a, b)
     return beautynum(res)
+

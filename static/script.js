@@ -57,7 +57,7 @@ function inp_num(inp, dig){
     // console.log('[^('+alphabet.slice(0,dig.value)+')]');
     var re = new RegExp('(?!^-)(?!['+alphabet.slice(0,dig.value)+'])','gi');
 
-    if(inp.value.length == 0 || (inp.value.match(re).length - 1)){
+    if(inp.value.length == 0 || inp.value.length > 50 || (inp.value.match(re).length - 1)){
         inp_err(inp);
         return 0;
     } 
