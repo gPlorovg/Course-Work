@@ -187,7 +187,6 @@ def calculate(data):
 
     a, b, s = sign(a, b)
     a, b = fill(a, b)
-    print(a, b)
     pos = dotpos(a, b)
 
     match d:
@@ -225,6 +224,3 @@ def calculate(data):
                     res = '-' + division(a, b)
     return beautynum(res)
 
-
-data = {'СС': '10', 'a': '0.312', 'b': '1.2321', 'Д': '+'}
-print(calculate(data))
