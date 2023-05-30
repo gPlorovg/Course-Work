@@ -175,9 +175,12 @@ def calculate(data):
                 itog = addition(res, itog)
         return itog
 
+    def translate(a):
+        return float(rebase(a, c, 10))
+
     def division(a, b):
-        a = float(rebase(a, c, 10))
-        b = 1 / float(rebase(b, c, 10))
+        a = translate(a)
+        b = 1 / translate(b)
         return rebase(a * b, 10, c)
 
     c = int(data['СС'])
@@ -185,42 +188,51 @@ def calculate(data):
     b = data['b'].replace(',', '.').upper()
     d = data['Д']
 
-    a, b, s = sign(a, b)
-    a, b = fill(a, b)
-    pos = dotpos(a, b)
+    rez_trans_num = 0
+    res = ''
+    if data['transf']:
+        rez_trans_num = translate(a)
+    else:
+        a, b, s = sign(a, b)
+        a, b = fill(a, b)
+        pos = dotpos(a, b)
+        match d:
+            case '+':
+                match s:
+                    case 1:
+                        res = addition(a, b)
+                    case 2:
+                        res = subtraction(b, a)
+                    case 3:
+                        res = subtraction(a, b)
+                    case 4:
+                        res = '-' + addition(a, b)
+            case '-':
+                match s:
+                    case 1:
+                        res = subtraction(a, b)
+                    case 2:
+                        res = '-' + addition(a, b)
+                    case 3:
+                        res = addition(a, b)
+                    case 4:
+                        res = subtraction(b, a)
+            case '*':
+                match s:
+                    case 1 | 4:
+                        res = multiplication(a, b)
+                    case 2 | 3:
+                        res = '-' + multiplication(a, b)
+            case '/':
+                match s:
+                    case 1 | 4:
+                        res = division(a, b)
+                    case 2 | 3:
+                        res = '-' + division(a, b)
+        res = beautynum(res)
+    return rez_trans_num, res #программа выводит кортеж: 1 значение - трансформация числа в 10 систему счисления,
+# второе число - результат работы калькулятора. выбор опционален по последнему значения словаря.
 
-    match d:
-        case '+':
-            match s:
-                case 1:
-                    res = addition(a, b)
-                case 2:
-                    res = subtraction(b, a)
-                case 3:
-                    res = subtraction(a, b)
-                case 4:
-                    res = '-' + addition(a, b)
-        case '-':
-            match s:
-                case 1:
-                    res = subtraction(a, b)
-                case 2:
-                    res = '-' + addition(a, b)
-                case 3:
-                    res = addition(a, b)
-                case 4:
-                    res = subtraction(b, a)
-        case '*':
-            match s:
-                case 1 | 4:
-                    res = multiplication(a, b)
-                case 2 | 3:
-                    res = '-' + multiplication(a, b)
-        case '/':
-            match s:
-                case 1 | 4:
-                    res = division(a, b)
-                case 2 | 3:
-                    res = '-' + division(a, b)
-    return beautynum(res)
+data = {'СС' : '2', 'a' : '11', 'b' : '10', 'Д' : '/', 'transf' : False}
 
+print(calculate(data))
