@@ -6,6 +6,8 @@ var dig = document.getElementById('digit');
 // Создание элемента ответа
 var answer = document.createElement('div');
 answer.className = "answer";
+var answer_dec = document.createElement('div');
+answer_dec.className = "answer";
 // Допустимый ввод
 var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -30,6 +32,7 @@ function send_to_server(a,b,action,dig){
         }
         resp.json().then(function (data) {
             show_rez(a,b,dig,action,data.rez);
+            document.body.append(document.createElement('br'));
             show_rez_dec(data.rez_dec[0], data.rez_dec[1], data.rez_dec[2], action);
         })
     });
@@ -75,9 +78,9 @@ function show_rez(a,b,dig,action,rez){
 }
 
 function show_rez_dec(a, b, rez, action, dig = 10){
-    answer.innerHTML = a.value+'<span>'+dig.value+'</span>'+' '+action.value+' '+b.value+'<span>'+dig.value+'</span>'
-        +' = '+ rez+'<span>'+dig.value+'</span>';
-    document.body.append(answer);
+    answer_dec.innerHTML = a+'<span>'+dig+'</span>'+' '+action.value+' '+b+'<span>'+dig+'</span>'
+        +' = '+ rez+'<span>'+dig+'</span>';
+    document.body.append(answer_dec);
 }
 
 document.getElementById('culcbut').onclick = function() {
