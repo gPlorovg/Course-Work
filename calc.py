@@ -188,51 +188,50 @@ def calculate(data):
     b = data['b'].replace(',', '.').upper()
     d = data['Д']
 
-    rez_trans_num = 0
     res = ''
-    if data['transf']:
-        rez_trans_num = translate(a)
-    else:
-        a, b, s = sign(a, b)
-        a, b = fill(a, b)
-        pos = dotpos(a, b)
-        match d:
-            case '+':
-                match s:
-                    case 1:
-                        res = addition(a, b)
-                    case 2:
-                        res = subtraction(b, a)
-                    case 3:
-                        res = subtraction(a, b)
-                    case 4:
-                        res = '-' + addition(a, b)
-            case '-':
-                match s:
-                    case 1:
-                        res = subtraction(a, b)
-                    case 2:
-                        res = '-' + addition(a, b)
-                    case 3:
-                        res = addition(a, b)
-                    case 4:
-                        res = subtraction(b, a)
-            case '*':
-                match s:
-                    case 1 | 4:
-                        res = multiplication(a, b)
-                    case 2 | 3:
-                        res = '-' + multiplication(a, b)
-            case '/':
-                match s:
-                    case 1 | 4:
-                        res = division(a, b)
-                    case 2 | 3:
-                        res = '-' + division(a, b)
-        res = beautynum(res)
-    return rez_trans_num, res #программа выводит кортеж: 1 значение - трансформация числа в 10 систему счисления,
-# второе число - результат работы калькулятора. выбор опционален по последнему значения словаря.
+    a, b, s = sign(a, b)
+    a, b = fill(a, b)
+    pos = dotpos(a, b)
+    match d:
+        case '+':
+            match s:
+                case 1:
+                    res = addition(a, b)
+                case 2:
+                    res = subtraction(b, a)
+                case 3:
+                    res = subtraction(a, b)
+                case 4:
+                    res = '-' + addition(a, b)
+        case '-':
+            match s:
+                case 1:
+                    res = subtraction(a, b)
+                case 2:
+                    res = '-' + addition(a, b)
+                case 3:
+                    res = addition(a, b)
+                case 4:
+                    res = subtraction(b, a)
+        case '*':
+            match s:
+                case 1 | 4:
+                    res = multiplication(a, b)
+                case 2 | 3:
+                    res = '-' + multiplication(a, b)
+        case '/':
+            match s:
+                case 1 | 4:
+                    res = division(a, b)
+                case 2 | 3:
+                    res = '-' + division(a, b)
+    res = beautynum(res)
+    rez_trans_num_a = translate(a)
+    rez_trans_num_b = translate(b)
+    rez_trans_num_rez = translate(res)
+    return  res, (rez_trans_num_a, rez_trans_num_b, rez_trans_num_rez) #программа выводит целое число и кортеж: 1 - результат работы калькулятора, 1 значение - трансформация числа в 10 систему счисления,
+# второе число - перевод числа b, третье число - перевод результата.
 
-data = {'СС' : '2', 'a' : '11', 'b' : '10', 'Д' : '/', 'transf' : False}
+data = {'СС' : '2', 'a' : '11', 'b' : '10', 'Д' : '/'}
 
 print(calculate(data))
