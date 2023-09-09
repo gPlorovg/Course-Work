@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курсовая работа</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Калькулятор в заданной системе счисления с преобразованием из-в десятичную систему</h1>
+        <div class="box">
+            <div>
+                <input id="inp1" type="text" size="20" placeholder="11001">
+                <div id="select_box">
+                    <select id="action">
+                        <option value="+" >прибавить к</option>
+                        <option value="-" >отнять</option>
+                        <option value="*" >умножить на</option>
+                        <option value="/" >поделить на</option>
+                    </select>
+                </div>
+                <input id="inp2" type="text" size="20" placeholder="11001">
+            </div>
+            <div>
+                в<input id="digit" type="text" size="2" placeholder="2">-ной системе исчисления
+            </div>
+        </div>
+        <div id="warning">
+            Калькулятор способен обрабатывать числа длиной до 50-ти символов и с разрядом системы исчисления не превышающим 36-ти
+        </div>
+        <div>
+            <button id="culcbut">Вычислить</button>
+        </div>
+    </div>
+<script src="../static/script.js"></script>
+</body>
+</html>
