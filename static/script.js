@@ -3,13 +3,15 @@ var a = document.getElementById('inp1');
 var b = document.getElementById('inp2');
 var action = document.getElementById('action');
 var dig = document.getElementById('digit');
+// flag for add elements
+f = true;
 // Создание элемента ответа
 var answer = document.createElement('div');
 answer.className = "answer";
 var answer_dec = document.createElement('div');
 answer_dec.className = "answer";
 // Допустимый ввод
-var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var alphabet = '.,0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 // Отправка запроса для вычисления на сервер
 function send_to_server(a,b,action,dig){
@@ -32,7 +34,6 @@ function send_to_server(a,b,action,dig){
         }
         resp.json().then(function (data) {
             show_rez(a,b,dig,action,data.rez);
-            document.body.append(document.createElement('br'));
             show_rez_dec(data.rez_dec[0], data.rez_dec[1], data.rez_dec[2], action);
         })
     });
@@ -58,8 +59,8 @@ function inp_dig(inp){
 }
 // Обработка ввода числа
 function inp_num(inp, dig){
-    // console.log('[^('+alphabet.slice(0,dig.value)+')]');
-    var re = new RegExp('(?!^-)(?!['+alphabet.slice(0,dig.value)+'])','gi');
+    // console.log('[^('+alphabet.slice(0,parseInt(dig.value)+2)+')]');
+    var re = new RegExp('(?!^-)(?!['+alphabet.slice(0,parseInt(dig.value)+2)+'])','gi');
 
     if(inp.value.length == 0 || inp.value.length > 50 || (inp.value.match(re).length - 1)){
         inp_err(inp);
@@ -74,13 +75,19 @@ function inp_num(inp, dig){
 function show_rez(a,b,dig,action,rez){
     answer.innerHTML = a.value+'<span>'+dig.value+'</span>'+' '+action.value+' '+b.value+'<span>'+dig.value+'</span>'
         +' = '+ rez+'<span>'+dig.value+'</span>';
-    document.body.append(answer);
+    if (f) {
+        document.body.append(answer);
+    }
 }
 
 function show_rez_dec(a, b, rez, action, dig = 10){
     answer_dec.innerHTML = a+'<span>'+dig+'</span>'+' '+action.value+' '+b+'<span>'+dig+'</span>'
         +' = '+ rez+'<span>'+dig+'</span>';
-    document.body.append(answer_dec);
+    if (f) {
+        f = false;
+        document.body.append(document.createElement('br'));
+        document.body.append(answer_dec);
+    }
 }
 
 document.getElementById('culcbut').onclick = function() {
